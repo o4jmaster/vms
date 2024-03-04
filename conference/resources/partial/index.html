@@ -30,8 +30,8 @@
 
     <dialog ng:show="showDetails">
         <div class="modal-header">
-            <h4 ng:show="!$parent.add_new"><span translate>Modify</span> {{$parent.edit_host.name}}</h4>
-            <h4 ng:show="$parent.add_new"><span translate>Add new host</span></h4>
+            <h4 ng:show="!$parent.add_new"><span translate>Modify</span> {{$parent.edit_conf.name}}</h4>
+            <h4 ng:show="$parent.add_new"><span translate>Add new conference </span></h4>
         </div>
         <div class="modal-body">
             <form class="form-group" ng:submit="save()">
@@ -41,31 +41,18 @@
                             <span translate>Name: </span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_host.name">
+                            <input class="form-control" type="text" ng:model="$parent.edit_conf.name">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span translate>Address: </span>
+                            <span translate>Number: </span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_host.address">
+                            <input class="form-control" type="text" ng:model="$parent.edit_conf.number">
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <span translate>Aliases: </span>
-                            <br />
-                            <a class="btn btn-default" ng:click="add_alias($parent.edit_host)">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <div ng:repeat="alias in $parent.edit_host.aliases">
-                                <input class="form-control" type="text" ng:model="alias.name">
-                            </div>
-                        </td>
-                    </tr>
+                    
                 </table>
             </form>
         </div>
