@@ -1,0 +1,84 @@
+
+<br/>
+
+<div>
+    <table class="table">
+        <tr>
+            <th translate>Route Name</th>
+            <th translate>Route Number</th>
+            <th translate></th>
+            <th translate> </th>
+            <th translate> </th>
+        </tr>
+        <tr ng:repeat="inroute in inroutes">
+            <td>{{inroute.routeName}}</td>
+            <td>{{inroute.routeNumber}}</td>
+            
+            <td class="list-group">
+                <button class="btn btn-default" ng:click="editIR(inroute)">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-default" ng:click="removeIR(inroute)">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-default" ng:click="addIR()" translate>Add</button>
+
+    <dialog ng:show="showDetailsIR">
+        <div class="modal-header">
+            <h4 ng:show="!$parent.add_new"><span translate>Modify</span> {{$parent.edit_inroute.routeName}}</h4>
+            <h4 ng:show="$parent.add_new"><span translate>Add new Inbound Route </span></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" ng:submit="saveIR()">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <span translate>DID Name </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_inroute.routeName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>DID Number </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_inroute.routeNumber">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Select Destination </span>
+                        </td>
+                        <td>
+                            <select class="form-control" ng:model="$parent.edit_inroute.selectDest" ng-options="trunk for trunk in trunks">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Destination Number </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_inroute.routeDestNumber">
+                        </td>
+                    </tr>
+                    
+                    
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="reset" ng:click="resetIR()" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
+            <button type="submit" ng:click="saveIR()" class="btn btn-default btn-flat pull-right" ng:show="!$parent.add_new" translate>Save</button>
+            <button type="submit" ng:click="saveNewIR()" class="btn btn-default btn-flat pull-right" ng:show="$parent.add_new" translate>Save</button>
+        </div>
+    </dialog>
+</div>
+

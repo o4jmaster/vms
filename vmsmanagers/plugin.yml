@@ -1,0 +1,32 @@
+name: vmsmanagers
+author: Comitfs Ltd
+email: support@comitfs.com
+url: http://comitfs.com
+version: '0.1'
+title: 'vmsmanagers'
+icon: wrench
+# dependency on Core is required for UI plugins
+dependencies:
+    - !PluginDependency {
+        plugin_name: core
+    }
+    - !OptionalPluginDependency {
+      plugin_name: conference
+    }
+    # - !ModuleDependency {
+    #   module_name: requests
+    # }
+    # - !BinaryDependency {
+    #   binary_name: curl
+    # }
+resources:
+    - 'resources/js/module.es'
+    - 'resources/js/routing.es'
+    - 'resources/js/controllers/index.controller.es'
+    - 'resources/partial/index.html'
+    - 'ng:vms.vmsmanagers'
+    # - 'ng:my.plugin.angular-submodule'
+    # - 'resources/module.js'
+    # - 'resources/module.coffee'
+    # - 'resources/styles.css'
+    # - 'resources/styles.less'

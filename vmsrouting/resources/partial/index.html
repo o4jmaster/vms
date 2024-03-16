@@ -1,0 +1,113 @@
+<div root-access>
+
+        <div>
+            <table class="table">
+                <tr>
+                    <th translate>Route Name</th>
+                    <th translate>Route Prefix</th>
+                    <th translate></th>
+                    <th translate> </th>
+                    <th translate> </th>
+                </tr>
+                <tr ng:repeat="outroute in outroutes">
+                    <td>{{outroute.routeName}}</td>
+                    <td>{{outroute.routePrefix}}</td>
+                    
+                    <td class="list-group">
+                        <button class="btn btn-default" ng:click="editOR(outroute)">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-default" ng:click="removeOR(outroute)">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        
+            <button class="btn btn-default" ng:click="addOR()" translate>Add</button>
+        
+            <dialog ng:show="showDetailsOR">
+                <div class="modal-header">
+                    <h4 ng:show="!$parent.add_newOR"><span translate>Modify</span> {{$parent.edit_outroute.routeName}}</h4>
+                    <h4 ng:show="$parent.add_newOR"><span translate>Add new Outbound Route </span></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group" ng:submit="saveOR()">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <span translate>Route Name </span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate>Route Prefix </span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routePrefix">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate>Length of Digits </span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeLength">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate>Trunk Prefix </span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.trunkPrefix">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate>Trunk Select </span>
+                                </td>
+                                <td>
+                                    <select ng-options="siptrunk as siptrunk.name for siptrunk in siptrunks track by siptrunk.id" ng:model="$parent.edit_outroute.trunkSelect"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                
+                                <td>
+                                    <input class="form-control" type="checkbox" ng:model="$parent.edit_outroute.useFailover">
+                                </td>
+                                <td>
+                                    <span translate> Use Failover Trunk </span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate> </span>
+                                </td>
+                                <td>
+                                    <select class="form-control" ng:model="$parent.edit_outroute.failoverTrunkSelect" ng-options="siptrunk as siptrunk.name for siptrunk in siptrunks track by siptrunk.id">
+                                </td>
+                            </tr>
+
+                            
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" ng:click="resetOR()" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
+                    <button type="submit" ng:click="saveOR()" class="btn btn-default btn-flat pull-right" ng:show="!$parent.add_newOR" translate>Save</button>
+                    <button type="submit" ng:click="saveNewOR()" class="btn btn-default btn-flat pull-right" ng:show="$parent.add_newOR" translate>Save</button>
+                </div>
+            </dialog>
+        </div>
+
+       
+        
+
+</div>
