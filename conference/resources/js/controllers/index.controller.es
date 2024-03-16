@@ -1,4 +1,4 @@
-angular.module('vms.conference').controller('VMSIndexController', function($scope, $http, pageTitle, gettext, notify, messagebox) {
+angular.module('vms.conference').controller('ConferenceIndexController', function($scope, $http, pageTitle, gettext, notify, messagebox) {
     pageTitle.set(gettext('Conferences'));
     
     $scope.showDetails = false;
@@ -7,6 +7,12 @@ angular.module('vms.conference').controller('VMSIndexController', function($scop
     $http.get('/api/confs').then( (resp) => {
 	    $scope.confs = resp.data.confs;
     });
+
+    $scope.add = () => {
+        $scope.add_new = true;
+        $scope.showDetails = true;
+        $scope.edit_conf = {}
+    };
 
     $scope.edit = (conf) => {
         $scope.edit_conf = conf;
@@ -22,7 +28,7 @@ angular.module('vms.conference').controller('VMSIndexController', function($scop
         $scope.showDetails = false;
         $http.put('/api/confs', {config: $scope.confs}).then( (resp) => {
             $scope.confs = resp.data.confs;
-            notify.success(gettext('Conferences successfully saved!'))
+            notify.success(gettext('Conferences successfully removed!'))
         });
     }
 
@@ -34,7 +40,7 @@ angular.module('vms.conference').controller('VMSIndexController', function($scop
         });
     }
 
-     $scope.saveNew = () => {
+    $scope.saveNew = () => {
         $scope.reset()
         $scope.confs.push($scope.edit_conf);
         $scope.save();
@@ -52,27 +58,6 @@ angular.module('vms.conference').controller('VMSIndexController', function($scop
         })
     }
 
-
-
-   
-    
-    $scope.add = () => {
-        $scope.add_new = true;
-        $scope.showDetails = true;
-    };
-
-    // Bind a test var with the template.
-    $scope.my_title = gettext('VMS');
-    
-    // GET a result through Python API
-    $http.get('/api/conference').then( (resp) => {
-	    $scope.python_get = resp.data;
-    });
-
-    // POST a result through Python API
-    $http.post('/api/conference', {my_var: 'my_plugin'}).then( (resp) => {
-	    $scope.python_post = resp.data;
-    });
 
 });
 

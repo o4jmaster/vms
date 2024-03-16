@@ -1,0 +1,123 @@
+<br/>
+
+<div>
+    <table class="table">
+        <tr>
+            <th translate>name</th>
+            <th translate>host</th>
+            <th translate></th>
+            <th translate> </th>
+            <th translate> </th>
+        </tr>
+        <tr ng:repeat="manageruser in managerusers">
+            <td>{{manageruser.name}}</td>
+            <td>{{manageruser.hostip}}</td>
+            
+            <td class="list-group">
+                <button class="btn btn-default" ng:click="edit(manageruser)">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-default" ng:click="remove(manageruser)">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-default" ng:click="add()" translate>Add</button>
+
+    <dialog ng:show="showDetails">
+        <div class="modal-header">
+            <h4 ng:show="!$parent.add_new"><span translate>Modify</span> {{$parent.edit_manageruser.name}}</h4>
+            <h4 ng:show="$parent.add_new"><span translate>Add new ManagerUser </span></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-group" ng:submit="save()">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <span translate>Name: </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Host IP: </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.hostip">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Password: </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="password" ng:model="$parent.edit_manageruser.password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Fqdn: </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.fqdn">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>AMI WriteTimeout </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.amiWriteTimeout" value="1000">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>AGI Prefix </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.agiprefix">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <span translate>Conf Prefix </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.confprefix">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>AMD Prefix </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.amdprefix">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>AGI Port </span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.agiport" value="4573">
+                        </td>
+                    </tr>
+                
+                    
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="reset" ng:click="reset()" class="btn btn-default btn-flat pull-right" translate>Cancel</button>
+            <button type="submit" ng:click="save()" class="btn btn-default btn-flat pull-right" ng:show="!$parent.add_new" translate>Save</button>
+            <button type="submit" ng:click="saveNew()" class="btn btn-default btn-flat pull-right" ng:show="$parent.add_new" translate>Save</button>
+        </div>
+    </dialog>
+</div>
