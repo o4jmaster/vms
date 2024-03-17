@@ -5,6 +5,8 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 
 from aj.plugins.conference.orm import ORMmanager
+from aj.plugins.conference.astconfig import GlobalsManager
+
 from bson.json_util import dumps, loads
 import json
 import logging
@@ -16,6 +18,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.orm = ORMmanager(context)
+        self.globals = GlobalsManager(context)
     
 
     @url(r'/api/siptrunks')
@@ -37,18 +40,21 @@ class Handler(HttpPlugin):
                 else: 
                     print(f"delete: {u}")
                     self.orm.sipusers.delete_one({"_id": ObjectId(u['id'])})
+            self.globals.config.doUpdate()
             return(self.getSipTrunks())
 
         if http_context.method == 'POST':
             siptrunks = http_context.json_body()['config']
             print(siptrunks)
             for siptrunk in siptrunks:
+                siptrunk['name'] = siptrunk['name'].replace(" ", "")
                 if self.orm.sipusers.find_one({"name": siptrunk['name']}) is None:
                     siptrunk['type'] = 'peer'
                     self.orm.sipusers.insert_one(siptrunk)
                 else:
                     logging.info(f"document exists {siptrunk}")
                     updated = self.orm.sipusers.update_one({"_id": ObjectId(siptrunk['id'])},{"$set": siptrunk})
+            self.globals.config.doUpdate()
             return (self.getSipTrunks())
    
     

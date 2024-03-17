@@ -5,6 +5,8 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 
 from aj.plugins.conference.orm import ORMmanager
+from aj.plugins.conference.astconfig import GlobalsManager
+
 from bson.json_util import dumps, loads
 import json
 import logging
@@ -16,6 +18,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.orm = ORMmanager(context)
+        self.globals = GlobalsManager(context)
         if self.orm.managerusers.find_one({'name':'vmsuser1'}) is None:
             vmsuser = {"name": "vmsuser1","hostip": "127.0.0.1", "fqdn": "", "amiWriteTimeout": 1000, 
                        "agiprefix": "97", "confprefix": "98", "amdprefix": "96", "password": "vmsuser1", "agiport": 4573}
@@ -39,6 +42,7 @@ class Handler(HttpPlugin):
                 else: 
                     print(f"delete: {u}")
                     self.orm.managerusers.delete_one({"_id": ObjectId(u['id'])})
+            self.globals.config.doUpdate()
             return(self.getManagerUsers())
 
         if http_context.method == 'POST':
@@ -50,6 +54,7 @@ class Handler(HttpPlugin):
                 else:
                     logging.info(f"document exists {manageruser}")
                     updated = self.orm.managerusers.update_one({"_id": ObjectId(manageruser['id'])},{"$set": manageruser})
+            self.globals.config.doUpdate()
             return (self.getManagerUsers())
    
     

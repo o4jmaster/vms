@@ -5,6 +5,7 @@ from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 
 from aj.plugins.conference.orm import ORMmanager
+from aj.plugins.conference.astconfig import GlobalsManager
 from bson.json_util import dumps, loads
 import json
 import logging
@@ -16,6 +17,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.orm = ORMmanager(context)
+        self.globals = GlobalsManager(context)
     
 
     @url(r'/api/inroutes')
@@ -37,6 +39,7 @@ class Handler(HttpPlugin):
                 else: 
                     print(f"delete: {u}")
                     self.orm.inroutes.delete_one({"_id": ObjectId(u['id'])})
+            self.globals.config.doUpdate()
             return(self.getInRoutes())
 
         if http_context.method == 'POST':
@@ -48,6 +51,7 @@ class Handler(HttpPlugin):
                 else:
                     logging.info(f"document exists {route}")
                     updated = self.orm.inroutes.update_one({"_id": ObjectId(route['id'])},{"$set": route})
+            self.globals.config.doUpdate()
             return (self.getInRoutes())
    
     
@@ -65,6 +69,7 @@ class Handler(HttpPlugin):
     def getdestTrunks(self,http_context):
         trunks = []
         trunks.append('echotest')
+        trunks.append('audiofork')
         for siptrunk in self.orm.sipusers.find({"type": "peer"}):
             trunks.append(siptrunk['name'])
         return {"trunks": [trunk for trunk in trunks]}
