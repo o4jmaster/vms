@@ -4,6 +4,7 @@ from aj.api.http import url, HttpPlugin
 from aj.auth import authorize
 from aj.api.endpoint import endpoint, EndpointError
 from .orm import ORMmanager
+from .astconfig import GlobalsManager
 from bson.json_util import dumps, loads
 import json
 import logging
@@ -14,6 +15,7 @@ class Handler(HttpPlugin):
     def __init__(self, context):
         self.context = context
         self.orm = ORMmanager(context)
+        self.globals = GlobalsManager(context)
 
     # Register URL for this api
     @url(r'/api/confs')
@@ -35,6 +37,7 @@ class Handler(HttpPlugin):
                 else: 
                     print(f"delete: {u}")
                     self.orm.conferences.delete_one({"_id": ObjectId(u['id'])})
+            self.globals.config.doUpdate()
             return(self.getConfs())
 
         if http_context.method == 'POST':
@@ -46,6 +49,7 @@ class Handler(HttpPlugin):
                 else:
                     logging.info(f"document exists {conf}")
                     updated = self.orm.conferences.update_one({"_id": ObjectId(conf['id'])},{"$set": conf})
+            self.globals.config.doUpdate()
             return (self.getConfs())
     
     def getConfs(self):

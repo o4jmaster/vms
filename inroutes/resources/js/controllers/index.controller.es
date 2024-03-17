@@ -1,4 +1,4 @@
-angular.module('vms.inroutes').controller('InboundRoutingIndexController', function($scope, $http, pageTitle, gettext, notify) {
+angular.module('vms.inroutes').controller('InboundRoutingIndexController', function($scope, $http, pageTitle, gettext, notify,messagebox) {
     pageTitle.set(gettext('Inbound Routing'));
 
     $scope.add_new = false;
