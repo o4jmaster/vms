@@ -33,7 +33,7 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
     $scope.addOR = function () {
         $scope.add_newOR = true;
         $scope.showDetailsOR = true;
-        $scope.edit_outroute = {};
+        $scope.edit_outroute = { "trunkPrefix": "", "useFailover": false };
     };
 
     $scope.editOR = function (outroute) {
