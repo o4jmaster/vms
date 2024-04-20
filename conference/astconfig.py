@@ -115,12 +115,30 @@ class VMSConfig(object):
                 extenconfig = extenconfig + f"same => n,Echo()                        ; Do the echo test\n"
                 extenconfig = extenconfig + f"same => n,Playback(demo-echodone)       ; Let them know it's over\n"
                 extenconfig = extenconfig + f"same => n,Goto(s,6)             ; Start over\n\n"
+            elif 'inbound2exten' in u and u['inbound2exten'] == True:
+                extenconfig = extenconfig + f"exten => {u['routeNumber']},1," + 'UserEvent(EventRinging,tsCallerid: ${CALLERID(num)},tsCalledid: ${EXTEN},tsChannel: ${CHANNEL}, server: ${SIPDOMAIN})\n'
+                extenconfig = extenconfig + f"same => n," + "ExecIf($[${LEN(${dialTimeout})} > 0]?Wait(0.5):Set(dialTimeout=60))\n"
+                extenconfig = extenconfig + f"same => n,Set(tsDirection=Incoming)\n"
+                extenconfig = extenconfig + "same => n,Dial(PJSIP/${EXTEN}@" + u['selectDest'] +',${dialTimeout},gU(macro-mt^${exten}^${CHANNEL}^${actionId}^${tsInterest}^${tsCalledId}^${tsParty}^${tsDirection}))\n'
+                extenconfig = extenconfig + f"same => n," + 'Set(failover=' + str(u['useFailover']).lower() + ')\n'
+                extenconfig = extenconfig + f"same => n," + 'Set(failoverTrunk=' + u['selectFailoverDest'] + ')\n'
+                extenconfig = extenconfig + f"same => n," + 'Set(myexten=${EXTEN})\n'
+                extenconfig = extenconfig + f"same => n," + 'NoOP(Dial Status: ${DIALSTATUS})\n'
+                extenconfig = extenconfig + f"same => n," + 'Goto(divoiceint,s-${DIALSTATUS},1)\n\n\n'
             else:
                 if 'routeDestNumber' in u and u['routeDestNumber'] is None:
                     logging.info(f"{u['routeDestNumber']} is null for inroute")
                 else:
                     if 'routeDestNumber'in u and u['routeDestNumber'] is not None and u['selectDest'] is not None:
-                        extenconfig = extenconfig + 'exten => '+ u['routeNumber'] +',1,Dial(PJSIP/' +u['routeDestNumber'] + '@' + u['selectDest'] +')\n'
+                        extenconfig = extenconfig + 'exten => '+ u['routeNumber'] +',1,Dial(PJSIP/' +u['routeDestNumber'] + '@' + u['selectDest'] +')\n\n'
+            
+        extenconfig = extenconfig + 'exten => _+Z.,1,UserEvent(EventRinging,tsCallerid: ${CALLERID(num)},tsCalledid: ${EXTEN},tsChannel: ${CHANNEL}, server: ${SIPDOMAIN})\n'
+        extenconfig = extenconfig + 'same => n,ExecIf($[${LEN(${dialTimeout})} > 0]?Wait(0.5):Set(dialTimeout=60))\n'
+        extenconfig = extenconfig + 'same => n,Set(tsDirection=Incoming)\n'
+        extenconfig = extenconfig + 'same => n,Dial(${CHANNEL:0:-9}/${EXTEN},${dialTimeout},gU(macro-mt^${exten}^${CHANNEL}^${actionId}^${tsInterest}^${tsCalledId}^${tsParty}^${tsDirection}))\n'
+        extenconfig = extenconfig + 'same => n,NoOP(Dial Status: ${DIALSTATUS})\n'
+        extenconfig = extenconfig + 'same => n,Goto(divoiceint,s-${DIALSTATUS},1)\n\n\n'
+
         
         extenconfig = extenconfig + '\n\n[ab_conferences]\n'
         
