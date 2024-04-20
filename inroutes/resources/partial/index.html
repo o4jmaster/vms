@@ -53,12 +53,46 @@
                             <input class="form-control" type="text" ng:model="$parent.edit_inroute.routeNumber">
                         </td>
                     </tr>
+
+                    <tr>
+                                
+                        <td>
+                            <input class="form-control" type="checkbox" ng:model="$parent.edit_inroute.inbound2exten">
+                        </td>
+                        <td>
+                            <span translate> Enable Inbound To Extension </span>
+                        </td>
+
+                    </tr>
+
+
                     <tr>
                         <td>
                             <span translate>Select Destination </span>
                         </td>
                         <td>
                             <select class="form-control" ng:model="$parent.edit_inroute.selectDest" ng-options="trunk for trunk in trunks">
+                        </td>
+                    </tr>
+
+                    <tr>
+                                
+                        <td>
+                            <input class="form-control" type="checkbox" ng:model="$parent.edit_inroute.useFailover">
+                        </td>
+                        <td>
+                            <span translate> Use Failover Trunk </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            <span translate>Select Failover Destination </span>
+                        </td>
+                        <td>
+                            <select class="form-control" ng:model="$parent.edit_inroute.selectFailoverDest" ng-options="trunk for trunk in trunks">
                         </td>
                     </tr>
                     <tr>
