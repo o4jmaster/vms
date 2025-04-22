@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/apps/crm/vms-package/usr/bin/python3
 
 import sys
 import wave

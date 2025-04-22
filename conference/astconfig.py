@@ -23,13 +23,13 @@ class VMSConfig(object):
     
     def __init__(self,orm):
         self.orm = orm
-        self.astcfg_dir = "/cem/vms-package/etc/asterisk"
+        self.astcfg_dir = "/apps/crm/vms-package/etc/asterisk"
         logging.info("VMSConfig Init")
 
         
     #Allowing direct Asterisk-cli interactions
     def cli(self,command):
-        return os.popen('/cem/vms-package/sbin/asterisk -rx "' + command + '"').read()
+        return os.popen('/apps/crm/vms-package/sbin/asterisk -rx "' + command + '"').read()
     
 
     def doUpdate(self):
