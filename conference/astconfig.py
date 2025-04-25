@@ -93,7 +93,7 @@ class VMSConfig(object):
             extenconfig = extenconfig + 'exten => ' + exten + ',5,Goto(eventoriginated,${EXTEN},1)\n'
             extenconfig = extenconfig + 'exten => ' + exten + ',6,Dial(PJSIP/' + route['trunkPrefix'] + '${EXTEN}@' + route['trunkSelect']['name']  + ',${dialTimeout},gU(macro-mt^${exten}^${CHANNEL}^${actionId}^${tsInterest}^${tsCalledId}^${tsParty}))\n'
             extenconfig = extenconfig + 'exten => ' + exten + ',7,Set(failover=' + str(route['useFailover']).lower() + ')\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',8,Set(failoverTrunk=' + route['failoverTrunkSelect']['name'] if 'failoverTrunkSelect' in route else '' + ')\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',8,Set(failoverTrunk=' + (route['failoverTrunkSelect']['name'] if 'failoverTrunkSelect' in route else '') + ')\n'
             extenconfig = extenconfig + 'exten => ' + exten + ',9,Set(myexten=${EXTEN})\n'
             if route['trunkPrefix'] is not None:
                 extenconfig = extenconfig + 'exten => ' + exten + ',10,Set(trunkPrefix=' + str(route['trunkPrefix']).lower() + ')\n'
