@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/astadmin/voice_apps_data/vms-package/usr/bin/python3
 
 import sys
 import wave
