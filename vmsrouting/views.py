@@ -20,10 +20,20 @@ class Handler(HttpPlugin):
         self.orm = ORMmanager(context)
         self.globals = GlobalsManager(context)
     
+    @url(r'/api/outrouteNames')
+    @endpoint(api=True)
+    def handle_api_out_route_names(self, http_context):
+        names = []
+        for u in self.getOutRoutes()['outroutes']:
+            names.append(u['routeName'])
+            return names
+
+
     @url(r'/api/outroutes')
     @endpoint(api=True)
     def handle_api_out_routes(self, http_context):
 
+        params = ['trunkPrefix','useFailover','routeName','routePrefix','routeLength','failoverTrunkSelect','trunkSelect']
         if http_context.method == 'GET':
             return(self.getOutRoutes())
             #return {"outroutes": [{"routeName": "Conf 6001", "routePrefix": "6001", "id": "65e5e4c29f9cce84d57fc70d"}, {"routeName": "Conf 6002", "routePrefix": "6002", "id": "65e5e4ca9f9cce84d57fc70e"}]}
@@ -32,6 +42,11 @@ class Handler(HttpPlugin):
             print(f"delete: {http_context.json_body()['config']}")
             outroutes = http_context.json_body()['config']
             for u in self.getOutRoutes()['outroutes']:
+                for p in params:
+                    if p == "failoverTrunkSelect" or p == "trunkSelect":
+                        u[p] = {}
+                    else:
+                        u[p] = ""
                 print(f"u obj: {u}")
                 if u in outroutes:
                     continue
@@ -46,6 +61,12 @@ class Handler(HttpPlugin):
             print(http_context.json_body())
             print(outroutes)
             for route in outroutes:
+                for p in params:
+                    if p not in route.keys():
+                        if p == "failoverTrunkSelect" or p == "trunkSelect":
+                            route[p] = {}
+                        else:
+                            route[p] = ""
                 if self.orm.outroutes.find_one({"routeName": route['routeName']}) is None:
                     self.orm.outroutes.insert_one(route)
                 else:

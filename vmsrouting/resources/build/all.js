@@ -30,6 +30,10 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
         $scope.siptrunks = resp.data.siptrunks;
     });
 
+    $http.get('/api/outrouteNames').then(function (resp) {
+        $scope.outrouteNames = resp.data;
+    });
+
     $scope.addOR = function () {
         $scope.add_newOR = true;
         $scope.showDetailsOR = true;
@@ -58,11 +62,30 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
         $scope.showDetailsOR = false;
         $http.post('/api/outroutes', { config: $scope.outroutes }).then(function (resp) {
             $scope.outroutes = resp.data.outroutes;
+
+            // Refresh the route names list after saving
+            $http.get('/api/outrouteNames').then(function (resp) {
+                $scope.outrouteNames = resp.data;
+            });
+
             notify.success(gettext('Outbound route successfully saved!'));
         });
     };
 
     $scope.saveNewOR = function () {
+        // FIXED: Changed from .name to .routeName
+        if (!$scope.edit_outroute.routeName || $scope.edit_outroute.routeName.trim() === '') {
+            notify.error(gettext('Route name is required!'));
+            return;
+        }
+
+        // Check if route name already exists in outrouteNames array
+        if ($scope.outrouteNames && $scope.outrouteNames.includes($scope.edit_outroute.routeName)) {
+            notify.error(gettext('RouteName already Exists'));
+            return;
+        }
+
+        // If validation passes, proceed with save
         $scope.resetOR();
         $scope.outroutes.push($scope.edit_outroute);
         $scope.saveOR();
