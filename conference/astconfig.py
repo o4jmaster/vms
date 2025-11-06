@@ -23,13 +23,13 @@ class VMSConfig(object):
     
     def __init__(self,orm):
         self.orm = orm
-        self.astcfg_dir = "/home/astadmin/voice_apps_data/vms-package/etc/asterisk"
+        self.astcfg_dir = "/home/astadmin/voice_apps_data/etc/asterisk"
         logging.info("VMSConfig Init")
 
         
     #Allowing direct Asterisk-cli interactions
     def cli(self,command):
-        return os.popen('/home/astadmin/voice_apps_data/vms-package/sbin/asterisk -rx "' + command + '"').read()
+        return os.popen('/home/astadmin/voice_apps_data/sbin/asterisk -rx "' + command + '"').read()
     
 
     def doUpdate(self):
