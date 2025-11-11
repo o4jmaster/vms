@@ -104,6 +104,46 @@
                         </td>
                     </tr>
                     
+                    <tr>
+                        <td>
+                            <span translate>RTP Symmetric: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng:model="$parent.edit_siptrunk.rtp_symmetric" ng:true-value="true" ng:false-value="false">
+                            <span style="margin-left: 10px;" translate>Enable symmetric RTP</span>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <span translate>Force RPort: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng:model="$parent.edit_siptrunk.force_rport" ng:true-value="true" ng:false-value="false">
+                            <span style="margin-left: 10px;" translate>Force rport parameter</span>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <span translate>Rewrite Contact: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng:model="$parent.edit_siptrunk.rewrite_contact" ng:true-value="true" ng:false-value="false">
+                            <span style="margin-left: 10px;" translate>Rewrite contact header</span>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <span translate>Direct Media: </span>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng:model="$parent.edit_siptrunk.direct_media" ng:true-value="true" ng:false-value="false">
+                            <span style="margin-left: 10px;" translate>Allow direct media</span>
+                        </td>
+                    </tr>
+                    
                 </table>
             </form>
         </div>

@@ -1,0 +1,23 @@
+name: grafana
+title: Grafana
+author: Comitfs Ltd
+email: support@comitfs.com
+homepage: https://comitfs.com
+version: '1.0'
+url: http://www.comitfs.com
+icon: dashboard
+platform:
+  - debian
+  - centos
+  - arch
+dependencies:
+    - !PluginDependency {
+        plugin_name: core
+    }
+    - !OptionalPluginDependency {
+       plugin_name: conference
+    }
+resources:
+  - 'resources/js/controllers.es6.js'
+  - 'resources/partial/index.html'
+  - 'ng:ajenti.grafana'

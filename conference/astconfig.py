@@ -78,7 +78,7 @@ class VMSConfig(object):
                 exten = '_' + route['routePrefix'] + '.'
             else:
                 if route['routeLength'].isdigit() == False:
-                    logging.info('error','length of Digits for Route: '+ '\"' + route['routeName']  + '\" needs to be a number')
+                    logging.error(f'Length of Digits for Route: "{route["routeName"]}" needs to be a number')
                     continue
             
                 exten = '_' + route['routePrefix']
@@ -193,6 +193,16 @@ class VMSConfig(object):
                 sipconfigfile = sipconfigfile + f"auth={u['name']}\n"
                 sipconfigfile = sipconfigfile + f"outbound_auth={u['name']}\n"
 
+            # Add the four new boolean parameters with default values of 'yes'
+            rtp_symmetric = 'yes' if u.get('rtp_symmetric', True) else 'no'
+            force_rport = 'yes' if u.get('force_rport', True) else 'no'
+            rewrite_contact = 'yes' if u.get('rewrite_contact', True) else 'no'
+            direct_media = 'yes' if u.get('direct_media', True) else 'no'
+            
+            sipconfigfile = sipconfigfile + f"rtp_symmetric={rtp_symmetric}\n"
+            sipconfigfile = sipconfigfile + f"force_rport={force_rport}\n"
+            sipconfigfile = sipconfigfile + f"rewrite_contact={rewrite_contact}\n"
+            sipconfigfile = sipconfigfile + f"direct_media={direct_media}\n"
 
             sipconfigfile = sipconfigfile + '\n\n\n\n'
             aorsconfigfile = aorsconfigfile + '\n\n\n\n'
@@ -208,4 +218,3 @@ class VMSConfig(object):
         fo33.write(idconfigfile)
         fo33.close()
         self.cli('core reload')
-        
