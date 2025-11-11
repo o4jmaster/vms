@@ -87,20 +87,26 @@ class VMSConfig(object):
                     exten = exten + 'X'
                 
             extenconfig = extenconfig + 'exten => ' + exten + ',1,Gosub(getlegfromchannel,s,1(${CHANNEL}))\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',2,ExecIf($[${LEN(${dialTimeout})} > 0]?Wait(0.5):Set(dialTimeout=60))\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',3,ExecIf($[\"${leg}\"= \"1\"]?Set(dialTimeout=${tsMakeCallTimeout}))\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',4,ExecIf($[\"${leg}\"= \"2\"]?Set(dialTimeout=${tsCallbackTimeout}))\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',5,Goto(eventoriginated,${EXTEN},1)\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',6,Dial(PJSIP/' + route['trunkPrefix'] + '${EXTEN}@' + route['trunkSelect']['name']  + ',${dialTimeout},gU(macro-mt^${exten}^${CHANNEL}^${actionId}^${tsInterest}^${tsCalledId}^${tsParty}))\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',7,Set(failover=' + str(route['useFailover']).lower() + ')\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,ExecIf($[${LEN(${dialTimeout})} > 0]?Wait(0.5):Set(dialTimeout=60))\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,ExecIf($[\"${leg}\"= \"1\"]?Set(dialTimeout=${tsMakeCallTimeout}))\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,ExecIf($[\"${leg}\"= \"2\"]?Set(dialTimeout=${tsCallbackTimeout}))\n'
+            
+            # Check if play_please_wait_audio is enabled and add Progress/Playback
+            if route.get('play_please_wait_audio', False):
+                extenconfig = extenconfig + 'exten => ' + exten + ',n,Progress()\n'
+                extenconfig = extenconfig + 'exten => ' + exten + ',n,Playback(please-wait-while-we-connect-your-call,noanswer)\n'
+            
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,Goto(eventoriginated,${EXTEN},1)\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n(do-dial),Dial(PJSIP/' + route['trunkPrefix'] + '${EXTEN}@' + route['trunkSelect']['name']  + ',${dialTimeout},gU(macro-mt^${exten}^${CHANNEL}^${actionId}^${tsInterest}^${tsCalledId}^${tsParty}))\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,Set(failover=' + str(route['useFailover']).lower() + ')\n'
             if route['failoverTrunkSelect'] is dict and 'name' in route['failoverTrunkSelect'].keys(): 
-                extenconfig = extenconfig + 'exten => ' + exten + ',8,Set(failoverTrunk=' + route['failoverTrunkSelect']['name'] + ')\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',9,Set(myexten=${EXTEN})\n'
+                extenconfig = extenconfig + 'exten => ' + exten + ',n,Set(failoverTrunk=' + route['failoverTrunkSelect']['name'] + ')\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,Set(myexten=${EXTEN})\n'
             if route['trunkPrefix'] is not None:
-                extenconfig = extenconfig + 'exten => ' + exten + ',10,Set(trunkPrefix=' + str(route['trunkPrefix']).lower() + ')\n'
+                extenconfig = extenconfig + 'exten => ' + exten + ',n,Set(trunkPrefix=' + str(route['trunkPrefix']).lower() + ')\n'
 
-            extenconfig = extenconfig + 'exten => ' + exten + ',11,NoOP(Dial Status: ${DIALSTATUS})\n'
-            extenconfig = extenconfig + 'exten => ' + exten + ',12,Goto(divoiceint,s-${DIALSTATUS},1)\n\n\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,NoOP(Dial Status: ${DIALSTATUS})\n'
+            extenconfig = extenconfig + 'exten => ' + exten + ',n,Goto(divoiceint,s-${DIALSTATUS},1)\n\n\n'
         
         
         extenconfig = extenconfig + '\n\n[inroutes]\n\n'

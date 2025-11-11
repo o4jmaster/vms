@@ -21,10 +21,19 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
     $scope.addOR = () => {
         $scope.add_newOR = true;
         $scope.showDetailsOR = true;
-        $scope.edit_outroute = {"trunkPrefix": "", "useFailover": false};
+        $scope.edit_outroute = {
+            "trunkPrefix": "", 
+            "useFailover": false,
+            "play_please_wait_audio": false
+        };
     };
 
     $scope.editOR = (outroute) => {
+        // Set default for play_please_wait_audio if it doesn't exist
+        if (outroute.play_please_wait_audio === undefined) {
+            outroute.play_please_wait_audio = false;
+        }
+        
         $scope.edit_outroute = outroute;
         $scope.showDetailsOR = true;
     }

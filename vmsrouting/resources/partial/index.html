@@ -77,14 +77,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                
-                                <td>
-                                    <input class="form-control" type="checkbox" ng:model="$parent.edit_outroute.useFailover">
+                                <td colspan="2">
+                                    <label>
+                                        <input type="checkbox" ng:model="$parent.edit_outroute.useFailover">
+                                        <span translate style="margin-left: 10px;">Use Failover Trunk</span>
+                                    </label>
                                 </td>
-                                <td>
-                                    <span translate> Use Failover Trunk </span>
-                                </td>
-
                             </tr>
                             <tr>
                                 <td>
@@ -92,6 +90,15 @@
                                 </td>
                                 <td>
                                     <select class="form-control" ng:model="$parent.edit_outroute.failoverTrunkSelect" ng-options="siptrunk as siptrunk.name for siptrunk in siptrunks track by siptrunk.id">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <label>
+                                        <input type="checkbox" ng:model="$parent.edit_outroute.play_please_wait_audio" ng:true-value="true" ng:false-value="false">
+                                        <span translate style="margin-left: 10px;">Play audio (Please wait while we connect your call)</span>
+                                    </label>
                                 </td>
                             </tr>
 
