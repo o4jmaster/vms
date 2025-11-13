@@ -36,7 +36,23 @@ class VMSConfig(object):
         extenconfig = '[divoiceint-vms]\n\n'
         mgrconfig = ""
         for mgr in self.orm.managerusers.find({}):
-            if mgr['hostip'] is None or mgr['name'] is None: continue
+            # Validate required fields exist
+            if mgr.get('hostip') is None or mgr.get('name') is None:
+                continue
+            if mgr.get('password') is None:
+                logging.error(f"Manager user '{mgr.get('name', 'unknown')}' is missing required 'password' field")
+                continue
+            if mgr.get('agiprefix') is None or mgr.get('agiport') is None:
+                logging.error(f"Manager user '{mgr.get('name')}' is missing required AGI configuration")
+                continue
+            if mgr.get('amdprefix') is None or mgr.get('confprefix') is None:
+                logging.error(f"Manager user '{mgr.get('name')}' is missing required prefix configuration")
+                continue
+            if mgr.get('amiWriteTimeout') is None:
+                logging.error(f"Manager user '{mgr.get('name')}' is missing required 'amiWriteTimeout' field")
+                continue
+            
+            # Now safe to use fields - all validated
             extenconfig = extenconfig + 'exten => _' + mgr['agiprefix'] + '.,1,Set(myexten=${EXTEN})\n'
             if 'fqdn' in mgr and mgr['fqdn'] is not None and len(mgr['fqdn']) > 3:
                 extenconfig = extenconfig + 'exten => _' + mgr['agiprefix'] + '.,2,AGI(agi://'+ mgr['fqdn'] +'/GetCallInAction.agi:'+ str(mgr['agiport']) +')\n'
