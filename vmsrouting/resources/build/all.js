@@ -68,6 +68,24 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
     };
 
     $scope.saveOR = function () {
+        // Validate Route Name
+        if (!$scope.edit_outroute.routeName || $scope.edit_outroute.routeName.trim() === '') {
+            notify.error(gettext('Route Name is required!'));
+            return;
+        }
+
+        // Validate Route Prefix
+        if ($scope.edit_outroute.routePrefix === undefined || $scope.edit_outroute.routePrefix === null || $scope.edit_outroute.routePrefix === '') {
+            notify.error(gettext('Route Prefix is required!'));
+            return;
+        }
+
+        // Validate Length of Digits
+        if (!$scope.edit_outroute.routeLength || $scope.edit_outroute.routeLength === '') {
+            notify.error(gettext('Length of Digits is required!'));
+            return;
+        }
+
         $scope.showDetailsOR = false;
         $http.post('/api/outroutes', { config: $scope.outroutes }).then(function (resp) {
             $scope.outroutes = resp.data.outroutes;
@@ -82,9 +100,21 @@ angular.module('vms.vmsrouting').controller('VMSRoutingIndexController', functio
     };
 
     $scope.saveNewOR = function () {
-        // FIXED: Changed from .name to .routeName
+        // Validate Route Name
         if (!$scope.edit_outroute.routeName || $scope.edit_outroute.routeName.trim() === '') {
-            notify.error(gettext('Route name is required!'));
+            notify.error(gettext('Route Name is required!'));
+            return;
+        }
+
+        // Validate Route Prefix
+        if ($scope.edit_outroute.routePrefix === undefined || $scope.edit_outroute.routePrefix === null || $scope.edit_outroute.routePrefix === '') {
+            notify.error(gettext('Route Prefix is required!'));
+            return;
+        }
+
+        // Validate Length of Digits
+        if (!$scope.edit_outroute.routeLength || $scope.edit_outroute.routeLength === '') {
+            notify.error(gettext('Length of Digits is required!'));
             return;
         }
 

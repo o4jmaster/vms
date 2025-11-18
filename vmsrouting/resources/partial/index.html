@@ -38,26 +38,26 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <span translate>Route Name </span>
+                                    <span translate>Route Name </span><span style="color: red;">*</span>
                                 </td>
                                 <td>
-                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeName">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span translate>Route Prefix </span>
-                                </td>
-                                <td>
-                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routePrefix">
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeName" required>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span translate>Length of Digits </span>
+                                    <span translate>Route Prefix </span><span style="color: red;">*</span>
                                 </td>
                                 <td>
-                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeLength">
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routePrefix" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span translate>Length of Digits </span><span style="color: red;">*</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" ng:model="$parent.edit_outroute.routeLength" required>
                                 </td>
                             </tr>
                             <tr>

@@ -38,26 +38,26 @@
                 <table class="table">
                     <tr>
                         <td>
-                            <span translate>Name: </span>
+                            <span translate>Name: </span><span style="color: red;">*</span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.name">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span translate>Host IP: </span>
-                        </td>
-                        <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.hostip">
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.name" required>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span translate>Password: </span>
+                            <span translate>Host IP: </span><span style="color: red;">*</span>
                         </td>
                         <td>
-                            <input class="form-control" type="password" ng:model="$parent.edit_manageruser.password">
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.hostip" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span translate>Password: </span><span style="color: red;">*</span>
+                        </td>
+                        <td>
+                            <input class="form-control" type="password" ng:model="$parent.edit_manageruser.password" required>
                         </td>
                     </tr>
                     <tr>
@@ -78,27 +78,27 @@
                     </tr>
                     <tr>
                         <td>
-                            <span translate>AGI Prefix </span>
+                            <span translate>AGI Prefix </span><span style="color: red;">*</span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.agiprefix">
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.agiprefix" required>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <span translate>Conf Prefix </span>
+                            <span translate>Conf Prefix </span><span style="color: red;">*</span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.confprefix">
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.confprefix" required>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span translate>AMD Prefix </span>
+                            <span translate>AMD Prefix </span><span style="color: red;">*</span>
                         </td>
                         <td>
-                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.amdprefix">
+                            <input class="form-control" type="text" ng:model="$parent.edit_manageruser.amdprefix" required>
                         </td>
                     </tr>
                     <tr>

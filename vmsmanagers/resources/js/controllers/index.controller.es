@@ -33,6 +33,42 @@ angular.module('vms.vmsmanagers').controller('VMSManagersPluginIndexController',
     }
 
     $scope.save = () => {
+        // Validate Name
+        if (!$scope.edit_manageruser.name || $scope.edit_manageruser.name.trim() === '') {
+            notify.error(gettext('Name is required!'));
+            return;
+        }
+        
+        // Validate Host IP
+        if (!$scope.edit_manageruser.hostip || $scope.edit_manageruser.hostip.trim() === '') {
+            notify.error(gettext('Host IP is required!'));
+            return;
+        }
+        
+        // Validate Password
+        if (!$scope.edit_manageruser.password || $scope.edit_manageruser.password.trim() === '') {
+            notify.error(gettext('Password is required!'));
+            return;
+        }
+        
+        // Validate AGI Prefix
+        if ($scope.edit_manageruser.agiprefix === undefined || $scope.edit_manageruser.agiprefix === null || $scope.edit_manageruser.agiprefix === '') {
+            notify.error(gettext('AGI Prefix is required!'));
+            return;
+        }
+        
+        // Validate Conf Prefix
+        if ($scope.edit_manageruser.confprefix === undefined || $scope.edit_manageruser.confprefix === null || $scope.edit_manageruser.confprefix === '') {
+            notify.error(gettext('Conf Prefix is required!'));
+            return;
+        }
+        
+        // Validate AMD Prefix
+        if ($scope.edit_manageruser.amdprefix === undefined || $scope.edit_manageruser.amdprefix === null || $scope.edit_manageruser.amdprefix === '') {
+            notify.error(gettext('AMD Prefix is required!'));
+            return;
+        }
+        
         $scope.showDetails = false;
         $http.post('/api/managerusers', {config: $scope.managerusers}).then( (resp) => {
             $scope.managerusers = resp.data.managerusers;
@@ -41,6 +77,42 @@ angular.module('vms.vmsmanagers').controller('VMSManagersPluginIndexController',
     }
 
     $scope.saveNew = () => {
+        // Validate Name
+        if (!$scope.edit_manageruser.name || $scope.edit_manageruser.name.trim() === '') {
+            notify.error(gettext('Name is required!'));
+            return;
+        }
+        
+        // Validate Host IP
+        if (!$scope.edit_manageruser.hostip || $scope.edit_manageruser.hostip.trim() === '') {
+            notify.error(gettext('Host IP is required!'));
+            return;
+        }
+        
+        // Validate Password
+        if (!$scope.edit_manageruser.password || $scope.edit_manageruser.password.trim() === '') {
+            notify.error(gettext('Password is required!'));
+            return;
+        }
+        
+        // Validate AGI Prefix
+        if ($scope.edit_manageruser.agiprefix === undefined || $scope.edit_manageruser.agiprefix === null || $scope.edit_manageruser.agiprefix === '') {
+            notify.error(gettext('AGI Prefix is required!'));
+            return;
+        }
+        
+        // Validate Conf Prefix
+        if ($scope.edit_manageruser.confprefix === undefined || $scope.edit_manageruser.confprefix === null || $scope.edit_manageruser.confprefix === '') {
+            notify.error(gettext('Conf Prefix is required!'));
+            return;
+        }
+        
+        // Validate AMD Prefix
+        if ($scope.edit_manageruser.amdprefix === undefined || $scope.edit_manageruser.amdprefix === null || $scope.edit_manageruser.amdprefix === '') {
+            notify.error(gettext('AMD Prefix is required!'));
+            return;
+        }
+        
         $scope.reset()
         $scope.managerusers.push($scope.edit_manageruser);
         $scope.save();
