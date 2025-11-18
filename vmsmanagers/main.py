@@ -11,6 +11,12 @@ class ItemProvider(SidebarItemProvider):
     def provide(self):
         return [
             {
+               'attach': None,
+               'id': 'category:vms',
+               'name': _('vms'),
+               'children': []
+            },
+            {
                 # category:tools, category:sofware, category:system, category:other
                 'attach': 'category:vms',
                 'name': 'Manager Users',
